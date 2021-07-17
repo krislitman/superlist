@@ -14,8 +14,7 @@ class UserVisitsPageTest(unittest.TestCase):
     def test_can_start_a_list_and_get_it_later(self):
         self.browser.get('http://localhost:8000')
 
-        self.assertIn('Habits', self.browser.title)
-        self.fail('Finish the test!')
+        self.assertIn('To-Do Lists', self.browser.title)
 
 
 if __name__ == '__main__':
