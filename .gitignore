@@ -3,3 +3,6 @@ env
 __pycache__
 *.pyc
 .env
+node_modules/
+package-lock.json
+package.json
