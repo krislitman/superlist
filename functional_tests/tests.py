@@ -1,3 +1,4 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
@@ -5,7 +6,7 @@ import unittest
 import time
 
 
-class UserVisitsPageTest(unittest.TestCase):
+class UserVisitsPageTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
@@ -20,7 +21,7 @@ class UserVisitsPageTest(unittest.TestCase):
 
     def test_can_start_a_list_and_get_it_later(self):
         # ? User visits the homepage
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # ? User notices the page title and header mention to-do lists
         self.assertIn('To-Do Lists', self.browser.title)
@@ -42,16 +43,11 @@ class UserVisitsPageTest(unittest.TestCase):
         time.sleep(1)
 
         self.check_for_row_in_list_table('1: Buy a new computer')
-        self.check_for_row_in_list_table('2: Break the computer')
 
         # ? "1: Buy a new computer" as an item in a to-do list
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('2: Buy a new computer', [row.text for row in rows])
+        self.assertIn('1: Buy a new computer', [row.text for row in rows])
 
         # ? There is still a text box inviting user to add another item.
         self.fail('Test isnt done')
-
-
-if __name__ == '__main__':
-    unittest.main()
